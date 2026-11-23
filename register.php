@@ -1,24 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apply for memebrship - Ereteti Dairy Sacco</title>
-</head>
-<body>
-     <header>
+<?php
+$page_title = "Register";
+$page_heading = "Join Ereteti Dairy Sacco";
+
+
+$message  = "";
+if( 
+    $_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        $first_name= htmlspecialchars($_POST["first_name"] ?? "");
+        $last_name= htmlspecialchars($_POST["last_name"] ?? "");
+        $national_id=htmlspecialchars($_POST["national_id"] ?? "");
+        $phone=htmlspecialchars($_POST["phone"] ?? "");
+        $route=htmlspecialchars($_POST["route"] ?? "");
+        $date_joined=htmlspecialchars($_POST["date_joined"] ?? "");
+
+        $message = "Application received. Thank you for your interest in joining Ereteti Dairy Sacco,
+         $first_name $last_name. We will contact you on $phone once your application is processed.";
+    }
+    include 'includes/header.php';
+?>
+
+        
+       
+    <main>
         <h1> Apply For Membership </h1>
         <p>Milk collected twice a day, on three routes out of Ngong.</p>
-        <nav>
-            <a href="/index.html">Home</a>
-            <a href="/about.html">About</a>
-            <a href="/routes.html">Our routes</a>
-            <a href="/contact.html">Contact</a>
-            <a href="/register.html">Join</a>
-             <a href="/deliveries.html">Deliveries</a>
-        </nav>
-    </header>
-    <main>
+        <?php
+        if($message !== ""): ?>
+            <p><?php echo $message; ?></p>
+        <?php endif; ?>
+
         <p>
             Any dairy farmer within reach of one of our three routes
               may apply to join Ereteti. You will need your national ID
@@ -26,7 +37,7 @@
               membership number is issued you may deliver from that day,
               and you are paid once a month for the litres we accept 
         </p>
-        <form action="#" method="post">
+        <form action="process-register.php" method="post">
             <fieldset>
                 <legend>Your details</legend>
             
@@ -52,9 +63,9 @@
             <label for="routes">Route</label>
             <select name="route" id="routes">
                 <option value="">Choose a route</option>
-                <option value="Kiserian">Kiserian</option>
-                <option value="Kiserian">Ngong</option>
-                <option value="Kiserian">Rongai</option>
+                <option value="1">Kiserian</option>
+                <option value="2">Ngong</option>
+                <option value="3">Rongai</option>
             </select>
             <label for="date">Date Of Joining</label>
             <input type="date" id="date" max="2026-09-24" name="date_joined">
@@ -68,9 +79,16 @@
         </form>
     </main>
 
-<footer>
-    <p>Ereteti Dairy Sacco, PO Box 4021, Ngong.</p>
-    <p>Site built by Rahama shariff DBT Year 1, 2026.</p>
-</footer>
-</body>
-</html>,
+    <aside>
+<h2>Notices</h2>
+<ul>
+<li>Milk is paid at <strong>KSh 52.00 a litre</strong> from
+1 October 2026.</li>
+<li>Annual General Meeting: Saturday 17 October, 10 a.m., at the
+Kiserian collection centre.</li>
+<li>New members: <a href="register.html">apply to join</a>. You need
+a national ID and a bank account.</li>
+</ul>
+</aside>
+
+<?php include 'includes/footer.php'; ?>
